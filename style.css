@@ -1,0 +1,53 @@
+:root {
+    --primary-orange: #ff6b00; /* Naranja vibrante */
+    --dark-gray: #2c3e50;      /* Gris oscuro elegante */
+    --light-gray: #f4f6f7;     /* Fondo suave */
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+}
+
+/* LOGO STYLES */
+.logo-brand {
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--dark-gray);
+}
+.logo-brand span {
+    color: var(--primary-orange);
+}
+
+/* BUTTONS & ACCENTS */
+.btn-primary {
+    background-color: var(--primary-orange);
+    border-color: var(--primary-orange);
+    color: white;
+    font-weight: 600;
+}
+.btn-primary:hover {
+    background-color: #e65c00;
+    border-color: #e65c00;
+}
+
+.text-orange {
+    color: var(--primary-orange) !important;
+}
+
+.border-orange {
+    border-left: 5px solid var(--primary-orange) !important;
+}
+
+/* CARDS */
+.card-custom {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+.card-custom:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
