@@ -117,7 +117,7 @@
 
     <script>
 
-        const API_URL = "https://homebanking-production-2025.up.railway.app";
+        const API_URL = "https://homeoverall-jan-fabiana-rossetto-a47630af.koyeb.app";
 
         document.addEventListener('DOMContentLoaded', () => {
             loadData();
@@ -145,7 +145,7 @@
                     console.log("USER DATA:", data);
 
                     // ==========================================
-                    // 1. UPDATE HEADER & PROFILE INPUTS (Merged)
+                    // 1. UPDATE HEADER & PROFILE INPUTS 
                     // ==========================================
                     const firstName = data.firstName || "User";
                     const lastName = data.lastName || "";
@@ -198,8 +198,7 @@
                 })
                 .catch(error => {
                     console.error(error);
-                    // Evita el alert si es un error de renderizado menor, o descoméntalo si prefieres ver el error
-                    // alert("Error: " + error.message);
+                   
                 });
         }
 
@@ -213,8 +212,7 @@
                 return;
             }
 
-            // Como tu backend solo maneja una cuenta por usuario para depósitos (según el código), 
-            // tomamos la cuenta, pero visualmente mostramos las opciones.
+           
             let html = '';
             accounts.forEach(acc => {
                 html += `
@@ -264,7 +262,7 @@
 
             const token = localStorage.getItem('token');
 
-            // 3. Prepare Parameters (Crucial for @RequestParam in Java)
+            // 3. Prepare Parameters 
             const params = new URLSearchParams();
             params.append('type', type);
             params.append('pin', pin);
@@ -273,20 +271,20 @@
             fetch(API_URL + '/api/cards/create', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded', // MUST BE THIS
+                    'Content-Type': 'application/x-www-form-urlencoded', 
                     'Authorization': 'Bearer ' + token
                 },
-                body: params // Send the URLSearchParams object directly
+                body: params 
             })
                 .then(async response => {
-                    // We read the text response immediately to show errors if any
+                    
                     const msg = await response.text();
 
                     if (response.ok) {
                         alert("Success! " + msg);
                         loadData(); // Reload to see the new card
                     } else {
-                        // This will show errors like "User already has an active Debit Card"
+                       
                         console.error("Backend Error:", msg);
                         alert("Failed: " + msg);
                     }
@@ -317,7 +315,7 @@
         }
         function renderCards(cards) {
             const container = document.getElementById('cards-container');
-            // Check if container exists to avoid errors
+            
             if (!container) return;
 
             if (!cards || cards.length === 0) {
@@ -329,11 +327,10 @@
             cards.forEach(card => {
                 const bgClass = card.color === 'GOLD' ? 'bg-warning text-dark' : 'bg-dark text-white';
 
-                // --- SAFETY FIX START ---
-                // Preparamos los datos antes para que no falle el .slice() si vienen nulos
+               
                 const cardNum = card.number ? card.number.slice(-4) : '0000';
                 const expDate = card.thruDate ? card.thruDate.slice(2, 7) : 'N/A';
-                // --- SAFETY FIX END ---
+               
 
                 html += `
         <div class="col-md-4 mb-4">
@@ -396,7 +393,7 @@
 
             const token = localStorage.getItem('token');
 
-            // ROUTE: /api/cards/{id} (Method: DELETE)
+            
             fetch(`${API_URL}/api/cards/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': 'Bearer ' + token }
@@ -421,14 +418,14 @@
 
             const token = localStorage.getItem('token');
 
-            // ROUTE: /api/cards/update-pin
+            
             fetch(API_URL + '/api/cards/update-pin', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'Authorization': 'Bearer ' + token
                 },
-                // JAVA REQUIRES: cardId, oldPin, newPin
+               
                 body: `cardId=${cardId}&oldPin=${oldPin}&newPin=${newPin}`
             })
                 .then(res => {
@@ -449,14 +446,14 @@
 
             const token = localStorage.getItem('token');
 
-            // ROUTE: /api/accounts/deposit
+            
             fetch(API_URL + '/api/accounts/deposit', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'Authorization': 'Bearer ' + token
                 },
-                body: `amount=${amount}` // YOUR JAVA ONLY ASKS FOR AMOUNT
+                body: `amount=${amount}` 
             }).then(res => {
                 if (res.ok) {
                     alert("Deposit successful");
@@ -474,14 +471,14 @@
 
             const token = localStorage.getItem('token');
 
-            // ROUTE: /api/accounts/withdraw
+            
             fetch(API_URL + '/api/accounts/withdraw', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'Authorization': 'Bearer ' + token
                 },
-                body: `amount=${amount}` // YOUR JAVA ONLY ASKS FOR AMOUNT
+                body: `amount=${amount}` 
             }).then(res => {
                 if (res.ok) {
                     alert("Withdrawal successful");
@@ -502,14 +499,14 @@
 
             const token = localStorage.getItem('token');
 
-            // NOTE: Check if your transfer controller is /api/transfers or /api/transactions
+           
             fetch(API_URL + '/api/transfers/execute', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'Authorization': 'Bearer ' + token
                 },
-                // YOUR JAVA ASKS FOR: amount and destinationDni
+               
                 body: `amount=${amount}&destinationDni=${destinationDni}`
             }).then(res => {
                 if (res.ok) {
@@ -530,12 +527,12 @@
 
             const token = localStorage.getItem('token');
 
-            // PREPARE PARAMS (Your Controller uses @RequestParam, so we send them in URL)
+           
             const params = new URLSearchParams();
             if (firstName) params.append('firstName', firstName);
             if (lastName) params.append('lastName', lastName);
 
-            // ROUTE: /api/users/me/update (PATCH)
+           
             fetch(API_URL + '/api/users/me/update?' + params.toString(), {
                 method: 'PATCH',
                 headers: {
@@ -545,7 +542,7 @@
                 .then(res => {
                     if (res.ok) {
                         alert("Profile updated successfully!");
-                        loadData(); // Refresh to show new name
+                        loadData(); 
                     } else {
                         res.text().then(msg => alert("Error: " + msg));
                     }
@@ -560,7 +557,7 @@
 
             const token = localStorage.getItem('token');
 
-            // ROUTE: /api/users/me/deactivate (PATCH)
+            
             fetch(API_URL + '/api/users/me/deactivate', {
                 method: 'PATCH',
                 headers: {
@@ -582,7 +579,7 @@
             window.location.href = "index.html";
         }
 
-        // AHORA RECIBE 'myAccountNumber' PARA PODER COMPARAR
+        
         function loadTransferHistory(myAccountNumber) {
             const token = localStorage.getItem('token');
 
@@ -600,7 +597,7 @@
                         return;
                     }
 
-                    // Ordenar: Más reciente primero
+                    
                     transfers.sort((a, b) => new Date(b.date) - new Date(a.date));
 
                     let html = '';
@@ -608,20 +605,20 @@
                         const dateObj = new Date(t.date);
                         const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-                        // LOGICA DE DIRECCIÓN (SENT vs RECEIVED)
+                        
                         let isSent = false;
 
-                        // Verificamos si yo soy el origen (chequeando null por seguridad)
+                       
                         if (t.sourceAccount && t.sourceAccount.number === myAccountNumber) {
                             isSent = true;
                         }
 
-                        // DEFINIR ESTILOS Y DATOS SEGÚN DIRECCIÓN
+                        
                         let amountClass = isSent ? "text-danger" : "text-success";
                         let amountSign = isSent ? "-" : "+";
                         let typeLabel = isSent ? "Transfer Sent" : "Transfer Received";
 
-                        // A QUIÉN / DE QUIÉN
+                        
                         let otherPartyName = "Unknown";
                         if (isSent) {
                             // Si envié, muestro el destinatario
