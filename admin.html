@@ -73,6 +73,17 @@
             <div class="tab-pane fade" id="cards-tab">
                 <div class="mb-4">
                     <label class="form-label">Find expired cards (or expiring soon)</label>
+                    <div class="alert alert-info d-flex align-items-center mt-3 shadow-sm" role="alert">
+                        <i class="bi bi-lightbulb-fill me-2 fs-4"></i>
+                        <div>
+                            <strong>Testing Hint:</strong> Since there are few cards, try filtering by these expiration
+                            dates:
+                            <br>
+                            <span class="badge bg-dark ms-1">2031-01-23</span>
+                            <span class="text-muted small">OR</span>
+                            <span class="badge bg-dark ms-1">2030-12-18</span>
+                        </div>
+                    </div>
                     <div class="d-flex gap-2" style="max-width: 400px;">
                         <input type="date" id="searchDate" class="form-control">
                         <button onclick="searchCardsByDate()" class="btn btn-warning">Search</button>
@@ -118,7 +129,7 @@
             const token = localStorage.getItem('token');
             let url = "";
 
-            
+
             if (type === 'email') {
                 const val = document.getElementById('searchEmail').value;
                 url = `${API_URL}/api/admin/search/email?email=${val}`;
@@ -162,7 +173,7 @@
             if (!confirm("ARE YOU SURE? This will permanently delete the user and all their data.")) return;
 
             const token = localStorage.getItem('token');
-           
+
             fetch(`${API_URL}/api/admin/users/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': 'Bearer ' + token }
@@ -179,14 +190,14 @@
 
         // ================= TRANSFERS SECTION =================
         function loadAllTransfers() {
-            
+
             fetchTransfers(`${API_URL}/api/admin/transfers/all`);
         }
 
         function searchTransfersByAmount() {
             const amount = document.getElementById('searchAmount').value;
             if (!amount) return;
-            
+
             fetchTransfers(`${API_URL}/api/transfers/search/amount?amount=${amount}`);
         }
 
@@ -233,7 +244,7 @@
 
             const token = localStorage.getItem('token');
 
-           
+
             fetch(`${API_URL}/api/admin/cards/expiration?date=${dateInput}`, {
                 headers: { 'Authorization': 'Bearer ' + token }
             })
@@ -306,7 +317,7 @@
             params.append('cardId', cardId);
             params.append('amount', amount);
 
-            
+
             fetch(`${API_URL}/api/admin/cards/update-limit`, {
                 method: 'PUT',
                 headers: {
@@ -331,7 +342,7 @@
 
             const token = localStorage.getItem('token');
 
-            
+
             fetch(`${API_URL}/api/admin/cards/${cardId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': 'Bearer ' + token }
@@ -353,7 +364,7 @@
 
             const token = localStorage.getItem('token');
 
-            
+
             fetch(`${API_URL}/api/admin/accounts/${accountId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': 'Bearer ' + token }
