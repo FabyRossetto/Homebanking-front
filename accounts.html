@@ -58,185 +58,185 @@
 
 
 
-            <div id="accounts-container" class="row">
-                <div class="col-12 text-center text-muted">Loading accounts...</div>
-            </div>
+        <div id="accounts-container" class="row">
+            <div class="col-12 text-center text-muted">Loading accounts...</div>
+        </div>
 
-            <hr class="my-5 opacity-25">
+        <hr class="my-5 opacity-25">
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3 class="fw-bold text-dark">My Cards</h3>
-                <button class="btn btn-outline-dark" onclick="createCard()">
-                    <i class="bi bi-credit-card"></i> Request Card
-                </button>
-            </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold text-dark">My Cards</h3>
+            <button class="btn btn-outline-dark" onclick="createCard()">
+                <i class="bi bi-credit-card"></i> Request Card
+            </button>
+        </div>
 
-            <div id="cards-container" class="row">
-                <div class="col-12 text-center text-muted">No cards found.</div>
-            </div>
+        <div id="cards-container" class="row">
+            <div class="col-12 text-center text-muted">No cards found.</div>
+        </div>
 
-            <div class="row mt-5">
-                <div class="col-12">
-                    <h3 class="fw-bold text-dark mb-4">Transfer History</h3>
-                    <div class="card shadow-sm p-4">
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Description</th>
-                                        <th>To (Owner)</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="history-rows">
-                                    <tr>
-                                        <td colspan="4" class="text-center text-muted">Loading...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+        <div class="row mt-5">
+            <div class="col-12">
+                <h3 class="fw-bold text-dark mb-4">Transfer History</h3>
+                <div class="card shadow-sm p-4">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>To (Owner)</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-rows">
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="row mb-5">
-                <div class="col-12">
-                    <div class="card p-4 shadow-sm">
-                        <h4 class="fw-bold mb-3">Profile Settings</h4>
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card p-4 shadow-sm">
+                    <h4 class="fw-bold mb-3">Profile Settings</h4>
 
-                        <div class="row g-3">
-                            <div class="col-md-5">
-                                <label class="form-label text-muted small">First Name</label>
-                                <input type="text" id="editFirstName" class="form-control">
-                            </div>
-                            <div class="col-md-5">
-                                <label class="form-label text-muted small">Last Name</label>
-                                <input type="text" id="editLastName" class="form-control">
-                            </div>
-
-                            <div class="col-md-2 d-flex align-items-end">
-                                <button onclick="updateUser()" class="btn btn-dark w-100">
-                                    <i class="bi bi-save"></i> Save
-                                </button>
-                            </div>
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            <label class="form-label text-muted small">First Name</label>
+                            <input type="text" id="editFirstName" class="form-control">
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label text-muted small">Last Name</label>
+                            <input type="text" id="editLastName" class="form-control">
                         </div>
 
-                        <hr class="my-4 opacity-25">
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="text-danger small fw-bold">DANGER ZONE</div>
-                            <button onclick="deactivateUser()" class="btn btn-outline-danger btn-sm">
-                                <i class="bi bi-person-x"></i> Deactivate My Account
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button onclick="updateUser()" class="btn btn-dark w-100">
+                                <i class="bi bi-save"></i> Save
                             </button>
                         </div>
                     </div>
+
+                    <hr class="my-4 opacity-25">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="text-danger small fw-bold">DANGER ZONE</div>
+                        <button onclick="deactivateUser()" class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-person-x"></i> Deactivate My Account
+                        </button>
+                    </div>
                 </div>
             </div>
-
         </div>
 
-        <script>
+    </div>
 
-            const API_URL = "https://overall-jan-fabiana-rossetto-a47630af.koyeb.app";
+    <script>
 
-            document.addEventListener('DOMContentLoaded', () => {
-                loadData();
-            });
+        const API_URL = "https://overall-jan-fabiana-rossetto-a47630af.koyeb.app";
 
-            function loadData() {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    window.location.href = "index.html";
-                    return;
-                }
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+        });
 
-                fetch(API_URL + '/api/users/current', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + token
-                    }
-                })
-                    .then(res => {
-                        if (!res.ok) throw new Error("Status: " + res.status);
-                        return res.json();
-                    })
-                    .then(data => {
-                        console.log("USER DATA:", data);
-
-                        // ==========================================
-                        // 1. UPDATE HEADER & PROFILE INPUTS 
-                        // ==========================================
-                        const firstName = data.firstName || "User";
-                        const lastName = data.lastName || "";
-
-                        // Header Name
-                        const userNameElement = document.getElementById('userName');
-                        if (userNameElement) userNameElement.textContent = `${firstName} ${lastName}`;
-
-                        // Profile Edit Inputs
-                        const inputFirst = document.getElementById('editFirstName');
-                        const inputLast = document.getElementById('editLastName');
-                        if (inputFirst) inputFirst.value = firstName;
-                        if (inputLast) inputLast.value = lastName;
-
-                        // ==========================================
-                        // 2. PREPARE ACCOUNTS 
-                        // ==========================================
-                        const accountList = [];
-                        let myAccountNumber = null;
-                        if (data.account) {
-                            accountList.push(data.account);
-                            myAccountNumber = data.account.number;
-                        }
-                        renderAccounts(accountList);
-
-                        // ==========================================
-                        // 3. PREPARE CARDS
-                        // ==========================================
-                        const cardList = [];
-                        // Add Debit Card if exists
-                        if (data.debitCard && data.debitCard.id) {
-                            data.debitCard.type = "DEBIT";
-                            cardList.push(data.debitCard);
-                        }
-                        // Add Credit Card if exists
-                        if (data.creditCard && data.creditCard.id) {
-                            data.creditCard.type = "CREDIT";
-                            cardList.push(data.creditCard);
-                        }
-
-                        renderCards(cardList);
-                        // ==========================================
-                        // 4. LOAD TRANSFER HISTORY 
-                        // ==========================================
-
-                        if (myAccountNumber) {
-                            loadTransferHistory(myAccountNumber);
-                        }
-
-                    })
-                    .catch(error => {
-                        console.error(error);
-
-                    });
+        function loadData() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = "index.html";
+                return;
             }
 
-            function renderAccounts(accounts) {
-                const container = document.getElementById('accounts-container');
-                if (!container) return;
-                container.innerHTML = '';
-
-                if (!accounts || accounts.length === 0) {
-                    container.innerHTML = '<div class="alert alert-warning">No accounts found.</div>';
-                    return;
+            fetch(API_URL + '/api/users/current', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
                 }
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error("Status: " + res.status);
+                    return res.json();
+                })
+                .then(data => {
+                    console.log("USER DATA:", data);
+
+                    // ==========================================
+                    // 1. UPDATE HEADER & PROFILE INPUTS 
+                    // ==========================================
+                    const firstName = data.firstName || "User";
+                    const lastName = data.lastName || "";
+
+                    // Header Name
+                    const userNameElement = document.getElementById('userName');
+                    if (userNameElement) userNameElement.textContent = `${firstName} ${lastName}`;
+
+                    // Profile Edit Inputs
+                    const inputFirst = document.getElementById('editFirstName');
+                    const inputLast = document.getElementById('editLastName');
+                    if (inputFirst) inputFirst.value = firstName;
+                    if (inputLast) inputLast.value = lastName;
+
+                    // ==========================================
+                    // 2. PREPARE ACCOUNTS 
+                    // ==========================================
+                    const accountList = [];
+                    let myAccountNumber = null;
+                    if (data.account) {
+                        accountList.push(data.account);
+                        myAccountNumber = data.account.number;
+                    }
+                    renderAccounts(accountList);
+
+                    // ==========================================
+                    // 3. PREPARE CARDS
+                    // ==========================================
+                    const cardList = [];
+                    // Add Debit Card if exists
+                    if (data.debitCard && data.debitCard.id) {
+                        data.debitCard.type = "DEBIT";
+                        cardList.push(data.debitCard);
+                    }
+                    // Add Credit Card if exists
+                    if (data.creditCard && data.creditCard.id) {
+                        data.creditCard.type = "CREDIT";
+                        cardList.push(data.creditCard);
+                    }
+
+                    renderCards(cardList);
+                    // ==========================================
+                    // 4. LOAD TRANSFER HISTORY 
+                    // ==========================================
+
+                    if (myAccountNumber) {
+                        loadTransferHistory(myAccountNumber);
+                    }
+
+                })
+                .catch(error => {
+                    console.error(error);
+
+                });
+        }
+
+        function renderAccounts(accounts) {
+            const container = document.getElementById('accounts-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (!accounts || accounts.length === 0) {
+                container.innerHTML = '<div class="alert alert-warning">No accounts found.</div>';
+                return;
+            }
 
 
-                let html = '';
-                accounts.forEach(acc => {
-                    html += `
+            let html = '';
+            accounts.forEach(acc => {
+                html += `
         <div class="col-md-6 mb-4">
             <div class="card p-3 shadow-sm border-orange h-100">
                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -260,100 +260,109 @@
                 </div>
             </div>
         </div>`;
-                });
-                container.innerHTML = html;
+            });
+            container.innerHTML = html;
+        }
+
+        function createCard() {
+            // 1. Ask for Card Type
+            let typeInput = prompt("Enter Card Type (DEBIT or CREDIT):");
+            if (!typeInput) return;
+
+            // Normalize to UpperCase for Java
+            const type = typeInput.toUpperCase().trim();
+            if (type !== "DEBIT" && type !== "CREDIT") {
+                return alert("Invalid type. Please type exactly DEBIT or CREDIT.");
             }
 
-            function createCard() {
-                // 1. Ask for Card Type
-                let typeInput = prompt("Enter Card Type (DEBIT or CREDIT):");
-                if (!typeInput) return;
-
-                // Normalize to UpperCase for Java
-                const type = typeInput.toUpperCase().trim();
-                if (type !== "DEBIT" && type !== "CREDIT") {
-                    return alert("Invalid type. Please type exactly DEBIT or CREDIT.");
-                }
-
-                // 2. Ask for PIN
-                const pin = prompt("Enter a 4-digit PIN:");
-                if (!pin || pin.length !== 4 || isNaN(pin)) {
-                    return alert("Invalid PIN. It must be exactly 4 digits.");
-                }
-
-                const token = localStorage.getItem('token');
-
-                // 3. Prepare Parameters 
-                const params = new URLSearchParams();
-                params.append('type', type);
-                params.append('pin', pin);
-
-                // 4. Send Request
-                fetch(API_URL + '/api/cards/create', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': 'Bearer ' + token
-                    },
-                    body: params
-                })
-                    .then(async response => {
-
-                        const msg = await response.text();
-
-                        if (response.ok) {
-                            alert("Success! " + msg);
-                            loadData(); // Reload to see the new card
-                        } else {
-
-                            console.error("Backend Error:", msg);
-                            alert("Failed: " + msg);
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Network Error:", error);
-                        alert("Connection Error. Check console for details.");
-                    });
+            // 2. Ask for PIN
+            const pin = prompt("Enter a 4-digit PIN:");
+            if (!pin || pin.length !== 4 || isNaN(pin)) {
+                return alert("Invalid PIN. It must be exactly 4 digits.");
             }
-            function createAccount() {
-                const token = localStorage.getItem('token');
-                if (!confirm("Create a new account?")) return;
 
-                fetch(API_URL + '/api/accounts/create', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': 'Bearer ' + token,
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                }).then(res => {
-                    if (res.status === 201 || res.status === 200) {
-                        alert("Account created!");
-                        loadData();
+            const token = localStorage.getItem('token');
+
+            // 3. Prepare Parameters 
+            const params = new URLSearchParams();
+            params.append('type', type);
+            params.append('pin', pin);
+
+            // 4. Send Request
+            fetch(API_URL + '/api/cards/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: params
+            })
+                .then(async response => {
+
+                    const msg = await response.text();
+
+                    if (response.ok) {
+                        alert("Success! " + msg);
+                        loadData(); // Reload to see the new card
                     } else {
-                        res.text().then(msg => alert("Error: " + msg));
+
+                        console.error("Backend Error:", msg);
+                        alert("Failed: " + msg);
                     }
+                })
+                .catch(error => {
+                    console.error("Network Error:", error);
+                    alert("Connection Error. Check console for details.");
                 });
-            }
-            function renderCards(cards) {
-                const container = document.getElementById('cards-container');
+        }
+        function createAccount() {
+            const token = localStorage.getItem('token');
+            if (!confirm("Create a new account?")) return;
 
-                if (!container) return;
-
-                if (!cards || cards.length === 0) {
-                    container.innerHTML = '<div class="col-12"><p class="text-muted">You don\'t have any cards yet.</p></div>';
-                    return;
+            fetch(API_URL + '/api/accounts/create', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 }
+            }).then(res => {
+                if (res.status === 201 || res.status === 200) {
+                    alert("Account created!");
+                    loadData();
+                } else {
+                    res.text().then(msg => alert("Error: " + msg));
+                }
+            });
+        }
+        function renderCards(cards) {
+            const container = document.getElementById('cards-container');
+            if (!container) return;
 
-                let html = '';
-                cards.forEach(card => {
-                    const bgClass = card.color === 'GOLD' ? 'bg-warning text-dark' : 'bg-dark text-white';
+            if (!cards || cards.length === 0) {
+                container.innerHTML = '<div class="col-12"><p class="text-muted">You don\'t have any cards yet.</p></div>';
+                return;
+            }
 
+            let html = '';
+            cards.forEach(card => {
+                const bgClass = card.color === 'GOLD' ? 'bg-warning text-dark' : 'bg-dark text-white';
+                const cardNum = card.number ? card.number.slice(-4) : '0000';
+                const expDate = card.thruDate ? card.thruDate.slice(2, 7) : 'N/A';
 
-                    const cardNum = card.number ? card.number.slice(-4) : '0000';
-                    const expDate = card.thruDate ? card.thruDate.slice(2, 7) : 'N/A';
+               
+                let limitInfo = '';
+                if (card.type === 'CREDIT') {
+                  
+                    const limit = card.maxLimit || 0;
+                    limitInfo = `
+                <div class="mt-2 pt-2 border-top border-secondary small d-flex justify-content-between">
+                    <span>Limit: $${limit}</span>
+                </div>
+            `;
+                }
+                // -------------------------------------------------------------
 
-
-                    html += `
+                html += `
         <div class="col-md-4 mb-4">
             <div class="card card-custom ${bgClass} p-3 shadow-sm" style="min-height: 220px; justify-content: space-between;">
                 <div class="d-flex justify-content-between">
@@ -365,16 +374,15 @@
                     <h5 class="ls-2" style="letter-spacing: 2px;">**** **** **** ${cardNum}</h5>
                 </div>
                 
-                <div class="d-flex justify-content-between small mb-3">
+                <div class="d-flex justify-content-between small mb-1">
                     <span>${card.cardHolder}</span>
                     <span>Exp: ${expDate}</span> 
                 </div>
 
-                <div class="d-grid gap-2">
+                ${limitInfo} <div class="d-grid gap-2 mt-3">
                     <button onclick="changeCardPin(${card.id})" class="btn btn-sm btn-light opacity-75">
                         <i class="bi bi-key"></i> Change PIN
                     </button>
-                    
                     <button onclick="deleteCard(${card.id})" class="btn btn-sm btn-danger opacity-75">
                         <i class="bi bi-trash"></i> Delete Card
                     </button>
@@ -382,282 +390,282 @@
             </div>
         </div>
         `;
-                });
-                container.innerHTML = html;
-            }
+            });
+            container.innerHTML = html;
+        }
 
 
-            // --- DELETE FUNCTIONS ---
+        // --- DELETE FUNCTIONS ---
 
 
-            function deleteAccount(id) {
-                if (!confirm("WARNING: This will delete the account and all its funds. Continue?")) return;
+        function deleteAccount(id) {
+            if (!confirm("WARNING: This will delete the account and all its funds. Continue?")) return;
 
-                const token = localStorage.getItem('token');
-                fetch(`${API_URL}/api/accounts/${id}`, {
-                    method: 'DELETE',
-                    headers: { 'Authorization': 'Bearer ' + token }
-                })
-                    .then(res => {
-                        if (res.ok) {
-                            alert("Account deleted.");
-                            loadData();
-                        } else {
-                            res.text().then(text => alert("Error: " + text));
-                        }
-                    })
-                    .catch(err => alert("Connection error"));
-            }
-            // DELETE CARD (Hard Delete)
-            function deleteCard(id) {
-                if (!confirm("Are you sure you want to delete this card? This cannot be undone.")) return;
-
-                const token = localStorage.getItem('token');
-
-
-                fetch(`${API_URL}/api/cards/${id}`, {
-                    method: 'DELETE',
-                    headers: { 'Authorization': 'Bearer ' + token }
-                })
-                    .then(res => {
-                        if (res.ok) {
-                            alert("Card deleted.");
-                            loadData();
-                        } else {
-                            res.text().then(msg => alert("Error: " + msg));
-                        }
-                    });
-            }
-
-            // CHANGE PIN
-            function changeCardPin(cardId) {
-                const oldPin = prompt("Enter your CURRENT PIN:");
-                if (!oldPin) return;
-
-                const newPin = prompt("Enter your NEW PIN (4 digits):");
-                if (!newPin || newPin.length !== 4) return alert("Invalid New PIN");
-
-                const token = localStorage.getItem('token');
-
-
-                fetch(API_URL + '/api/cards/update-pin', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': 'Bearer ' + token
-                    },
-
-                    body: `cardId=${cardId}&oldPin=${oldPin}&newPin=${newPin}`
-                })
-                    .then(res => {
-                        if (res.ok) {
-                            alert("PIN updated successfully.");
-                        } else {
-                            res.text().then(msg => alert("Error: " + msg));
-                        }
-                    });
-            }
-
-            // --- TRANSACTION FUNCTIONS ---
-
-            // 1. DEPOSIT (Only asks for Amount)
-            function handleDeposit() {
-                const amount = prompt("Enter amount to deposit:");
-                if (!amount || isNaN(amount) || amount <= 0) return alert("Invalid amount");
-
-                const token = localStorage.getItem('token');
-
-
-                fetch(API_URL + '/api/accounts/deposit', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': 'Bearer ' + token
-                    },
-                    body: `amount=${amount}`
-                }).then(res => {
+            const token = localStorage.getItem('token');
+            fetch(`${API_URL}/api/accounts/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': 'Bearer ' + token }
+            })
+                .then(res => {
                     if (res.ok) {
-                        alert("Deposit successful");
+                        alert("Account deleted.");
+                        loadData();
+                    } else {
+                        res.text().then(text => alert("Error: " + text));
+                    }
+                })
+                .catch(err => alert("Connection error"));
+        }
+        // DELETE CARD (Hard Delete)
+        function deleteCard(id) {
+            if (!confirm("Are you sure you want to delete this card? This cannot be undone.")) return;
+
+            const token = localStorage.getItem('token');
+
+
+            fetch(`${API_URL}/api/cards/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': 'Bearer ' + token }
+            })
+                .then(res => {
+                    if (res.ok) {
+                        alert("Card deleted.");
                         loadData();
                     } else {
                         res.text().then(msg => alert("Error: " + msg));
                     }
                 });
-            }
+        }
 
-            // 2. WITHDRAW (Only asks for Amount)
-            function handleWithdraw() {
-                const amount = prompt("Enter amount to withdraw:");
-                if (!amount || isNaN(amount) || amount <= 0) return alert("Invalid amount");
+        // CHANGE PIN
+        function changeCardPin(cardId) {
+            const oldPin = prompt("Enter your CURRENT PIN:");
+            if (!oldPin) return;
 
-                const token = localStorage.getItem('token');
+            const newPin = prompt("Enter your NEW PIN (4 digits):");
+            if (!newPin || newPin.length !== 4) return alert("Invalid New PIN");
+
+            const token = localStorage.getItem('token');
 
 
-                fetch(API_URL + '/api/accounts/withdraw', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': 'Bearer ' + token
-                    },
-                    body: `amount=${amount}`
-                }).then(res => {
+            fetch(API_URL + '/api/cards/update-pin', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + token
+                },
+
+                body: `cardId=${cardId}&oldPin=${oldPin}&newPin=${newPin}`
+            })
+                .then(res => {
                     if (res.ok) {
-                        alert("Withdrawal successful");
-                        loadData();
+                        alert("PIN updated successfully.");
                     } else {
                         res.text().then(msg => alert("Error: " + msg));
                     }
                 });
-            }
+        }
 
-            // 3. TRANSFER (Asks for Amount and DNI)
-            function handleTransfer() {
-                const destinationDni = prompt("Enter destination ID (DNI):");
-                if (!destinationDni) return;
+        // --- TRANSACTION FUNCTIONS ---
 
-                const amount = prompt("Enter amount to transfer:");
-                if (!amount || isNaN(amount) || amount <= 0) return alert("Invalid amount");
+        // 1. DEPOSIT (Only asks for Amount)
+        function handleDeposit() {
+            const amount = prompt("Enter amount to deposit:");
+            if (!amount || isNaN(amount) || amount <= 0) return alert("Invalid amount");
 
-                const token = localStorage.getItem('token');
+            const token = localStorage.getItem('token');
 
 
-                fetch(API_URL + '/api/transfers/execute', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': 'Bearer ' + token
-                    },
+            fetch(API_URL + '/api/accounts/deposit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: `amount=${amount}`
+            }).then(res => {
+                if (res.ok) {
+                    alert("Deposit successful");
+                    loadData();
+                } else {
+                    res.text().then(msg => alert("Error: " + msg));
+                }
+            });
+        }
 
-                    body: `amount=${amount}&destinationDni=${destinationDni}`
-                }).then(res => {
+        // 2. WITHDRAW (Only asks for Amount)
+        function handleWithdraw() {
+            const amount = prompt("Enter amount to withdraw:");
+            if (!amount || isNaN(amount) || amount <= 0) return alert("Invalid amount");
+
+            const token = localStorage.getItem('token');
+
+
+            fetch(API_URL + '/api/accounts/withdraw', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: `amount=${amount}`
+            }).then(res => {
+                if (res.ok) {
+                    alert("Withdrawal successful");
+                    loadData();
+                } else {
+                    res.text().then(msg => alert("Error: " + msg));
+                }
+            });
+        }
+
+        // 3. TRANSFER (Asks for Amount and DNI)
+        function handleTransfer() {
+            const destinationDni = prompt("Enter destination ID (DNI):");
+            if (!destinationDni) return;
+
+            const amount = prompt("Enter amount to transfer:");
+            if (!amount || isNaN(amount) || amount <= 0) return alert("Invalid amount");
+
+            const token = localStorage.getItem('token');
+
+
+            fetch(API_URL + '/api/transfers/execute', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + token
+                },
+
+                body: `amount=${amount}&destinationDni=${destinationDni}`
+            }).then(res => {
+                if (res.ok) {
+                    alert("Transfer successful");
+                    loadData();
+                } else {
+                    res.text().then(msg => alert("Error: " + msg));
+                }
+            });
+        }
+
+        // --- UPDATE USER PROFILE ---
+        function updateUser() {
+            const firstName = document.getElementById('editFirstName').value;
+            const lastName = document.getElementById('editLastName').value;
+
+            if (!firstName && !lastName) return alert("Nothing to update.");
+
+            const token = localStorage.getItem('token');
+
+
+            const params = new URLSearchParams();
+            if (firstName) params.append('firstName', firstName);
+            if (lastName) params.append('lastName', lastName);
+
+
+            fetch(API_URL + '/api/users/me/update?' + params.toString(), {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+                .then(res => {
                     if (res.ok) {
-                        alert("Transfer successful");
+                        alert("Profile updated successfully!");
                         loadData();
                     } else {
                         res.text().then(msg => alert("Error: " + msg));
                     }
-                });
-            }
+                })
+                .catch(err => alert("Connection error"));
+        }
 
-            // --- UPDATE USER PROFILE ---
-            function updateUser() {
-                const firstName = document.getElementById('editFirstName').value;
-                const lastName = document.getElementById('editLastName').value;
+        // --- DEACTIVATE ACCOUNT ---
+        function deactivateUser() {
+            const confirmation = confirm("WARNING: Are you sure you want to deactivate your account? You will be logged out.");
+            if (!confirmation) return;
 
-                if (!firstName && !lastName) return alert("Nothing to update.");
-
-                const token = localStorage.getItem('token');
-
-
-                const params = new URLSearchParams();
-                if (firstName) params.append('firstName', firstName);
-                if (lastName) params.append('lastName', lastName);
+            const token = localStorage.getItem('token');
 
 
-                fetch(API_URL + '/api/users/me/update?' + params.toString(), {
-                    method: 'PATCH',
-                    headers: {
-                        'Authorization': 'Bearer ' + token
+            fetch(API_URL + '/api/users/me/deactivate', {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+                .then(res => {
+                    if (res.ok) {
+                        alert("Account deactivated. Goodbye.");
+                        logout(); // Log out immediately
+                    } else {
+                        res.text().then(msg => alert("Error: " + msg));
                     }
                 })
-                    .then(res => {
-                        if (res.ok) {
-                            alert("Profile updated successfully!");
-                            loadData();
-                        } else {
-                            res.text().then(msg => alert("Error: " + msg));
-                        }
-                    })
-                    .catch(err => alert("Connection error"));
-            }
-
-            // --- DEACTIVATE ACCOUNT ---
-            function deactivateUser() {
-                const confirmation = confirm("WARNING: Are you sure you want to deactivate your account? You will be logged out.");
-                if (!confirmation) return;
-
-                const token = localStorage.getItem('token');
+                .catch(err => alert("Connection error"));
+        }
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = "index.html";
+        }
 
 
-                fetch(API_URL + '/api/users/me/deactivate', {
-                    method: 'PATCH',
-                    headers: {
-                        'Authorization': 'Bearer ' + token
+        function loadTransferHistory(myAccountNumber) {
+            const token = localStorage.getItem('token');
+
+            fetch(API_URL + '/api/transfers/history', {
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer ' + token }
+            })
+                .then(res => res.json())
+                .then(transfers => {
+                    const tbody = document.getElementById('history-rows');
+                    tbody.innerHTML = '';
+
+                    if (!transfers || transfers.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No transfers yet.</td></tr>';
+                        return;
                     }
-                })
-                    .then(res => {
-                        if (res.ok) {
-                            alert("Account deactivated. Goodbye.");
-                            logout(); // Log out immediately
-                        } else {
-                            res.text().then(msg => alert("Error: " + msg));
-                        }
-                    })
-                    .catch(err => alert("Connection error"));
-            }
-            function logout() {
-                localStorage.removeItem('token');
-                window.location.href = "index.html";
-            }
 
 
-            function loadTransferHistory(myAccountNumber) {
-                const token = localStorage.getItem('token');
+                    transfers.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-                fetch(API_URL + '/api/transfers/history', {
-                    method: 'GET',
-                    headers: { 'Authorization': 'Bearer ' + token }
-                })
-                    .then(res => res.json())
-                    .then(transfers => {
-                        const tbody = document.getElementById('history-rows');
-                        tbody.innerHTML = '';
+                    let html = '';
+                    transfers.forEach(t => {
+                        const dateObj = new Date(t.date);
+                        const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-                        if (!transfers || transfers.length === 0) {
-                            tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No transfers yet.</td></tr>';
-                            return;
+
+                        let isSent = false;
+
+
+                        if (t.sourceAccount && t.sourceAccount.number === myAccountNumber) {
+                            isSent = true;
                         }
 
 
-                        transfers.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-                        let html = '';
-                        transfers.forEach(t => {
-                            const dateObj = new Date(t.date);
-                            const dateStr = dateObj.toLocaleDateString() + ' ' + dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                        let amountClass = isSent ? "text-danger" : "text-success";
+                        let amountSign = isSent ? "-" : "+";
+                        let typeLabel = isSent ? "Transfer Sent" : "Transfer Received";
 
 
-                            let isSent = false;
-
-
-                            if (t.sourceAccount && t.sourceAccount.number === myAccountNumber) {
-                                isSent = true;
-                            }
-
-
-                            let amountClass = isSent ? "text-danger" : "text-success";
-                            let amountSign = isSent ? "-" : "+";
-                            let typeLabel = isSent ? "Transfer Sent" : "Transfer Received";
-
-
-                            let otherPartyName = "Unknown";
-                            if (isSent) {
-                                // Si envié, muestro el destinatario
-                                if (t.destinationAccount && t.destinationAccount.user) {
-                                    otherPartyName = "To: " + t.destinationAccount.user.firstName + " " + t.destinationAccount.user.lastName;
-                                } else {
-                                    otherPartyName = "To: External Account";
-                                }
+                        let otherPartyName = "Unknown";
+                        if (isSent) {
+                            // Si envié, muestro el destinatario
+                            if (t.destinationAccount && t.destinationAccount.user) {
+                                otherPartyName = "To: " + t.destinationAccount.user.firstName + " " + t.destinationAccount.user.lastName;
                             } else {
-                                // Si recibí, muestro el remitente
-                                if (t.sourceAccount && t.sourceAccount.user) {
-                                    otherPartyName = "From: " + t.sourceAccount.user.firstName + " " + t.sourceAccount.user.lastName;
-                                } else {
-                                    otherPartyName = "From: External Account";
-                                }
+                                otherPartyName = "To: External Account";
                             }
+                        } else {
+                            // Si recibí, muestro el remitente
+                            if (t.sourceAccount && t.sourceAccount.user) {
+                                otherPartyName = "From: " + t.sourceAccount.user.firstName + " " + t.sourceAccount.user.lastName;
+                            } else {
+                                otherPartyName = "From: External Account";
+                            }
+                        }
 
-                            html += `
+                        html += `
             <tr>
                 <td>
                     <small>${dateStr}</small>
@@ -672,14 +680,14 @@
                 <td class="${amountClass} fw-bold fs-5">${amountSign}$${t.amount.toFixed(2)}</td>
             </tr>
             `;
-                        });
-                        tbody.innerHTML = html;
-                    })
-                    .catch(err => console.error("Error loading history:", err));
-            }
+                    });
+                    tbody.innerHTML = html;
+                })
+                .catch(err => console.error("Error loading history:", err));
+        }
 
 
-        </script>
+    </script>
 </body>
 
 </html>

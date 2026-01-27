@@ -75,13 +75,15 @@
                     <label class="form-label">Find expired cards (or expiring soon)</label>
                     <div class="alert alert-info d-flex align-items-center mt-3 shadow-sm" role="alert">
                         <i class="bi bi-lightbulb-fill me-2 fs-4"></i>
-                        <div>
-                            <strong>Testing Hint:</strong> Since there are few cards, try filtering by these expiration
-                            dates:
-                            <br>
-                            <span class="badge bg-dark ms-1">2031-01-23</span>
-                            <span class="text-muted small">OR</span>
-                            <span class="badge bg-dark ms-1">2030-12-18</span>
+                        <div class="alert alert-info d-flex align-items-center mt-3 shadow-sm" role="alert">
+                            <i class="bi bi-lightbulb-fill me-2 fs-4"></i>
+                            <div>
+                                <strong>Testing Hint:</strong> Try filtering by these expiration dates:
+                                <br>
+                                <span class="badge bg-dark ms-1">01/23/2031</span>
+                                <span class="text-muted small">OR</span>
+                                <span class="badge bg-dark ms-1">12/18/2030</span>
+                            </div>
                         </div>
                     </div>
                     <div class="d-flex gap-2" style="max-width: 400px;">
@@ -260,7 +262,11 @@
                     let rows = cards.map(c => `
             <tr>
         <td>${c.number}</td>
-        <td>${c.type}</td> <td>${c.cardHolder}</td>
+        <td>${c.type}</td>
+        <td class="fw-bold text-success">
+            ${c.type === 'CREDIT' ? '$' + c.maxLimit : '-'}
+        </td>
+         <td>${c.cardHolder}</td>
         <td>
             <span class="badge bg-secondary">${c.thruDate || c.expirationDate}</span>
         </td>
@@ -285,6 +291,7 @@
                         <tr>
                             <th>Number</th>
                             <th>Type</th>
+                            <th>Limit</th>
                             <th>Holder</th>
                             <th>Expiration</th>
                             <th>Actions</th>
